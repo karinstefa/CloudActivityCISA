@@ -52,3 +52,12 @@ def delete_item(item_id: int):
 			del items_db[idx]
 			return {"message": "Item eliminado"}
 	raise HTTPException(status_code=404, detail="Item no encontrado")
+
+@app.patch("/items/{item_id}/done", response_model=Item)
+def mark_item_done(item_id: int):
+	for item in items_db:
+		if item.id == item_id:
+			item.done = True
+			return item
+	raise HTTPException(status_code=404, detail="Item no encontrado")
+ 

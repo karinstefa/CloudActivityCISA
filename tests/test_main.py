@@ -43,6 +43,11 @@ def test_update_item():
 	item = response.json()
 	assert item["name"] == "Tarea Actualizada"
 
+def test_mark_item_done():
+	client.post("/items", json={"name": "Tarea pendiente", "description": "Debe	completarse"})
+	response = client.patch("/items/2/done")
+	assert response.status_code == 200
+	assert response.json()["done"] is True
 
 def test_delete_item():
 	response = client.delete("/items/1")
@@ -51,3 +56,4 @@ def test_delete_item():
 
 	response = client.get("/items/1")
 	assert response.status_code == 404
+ 
